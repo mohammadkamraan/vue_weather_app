@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import { storage } from "../../../lib/storage";
+import { storage } from "../../lib/storage";
 export default {
   emits: ["onSearch", "onShowAlert"],
   data() {

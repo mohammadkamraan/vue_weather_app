@@ -29,11 +29,11 @@
 </template>
 
 <script>
-import BaseAlert from "./components/UI/BaseAlert/BaseAlert.vue";
-import SearchCity from "./components/Weather/SearchCity/SearchCity.vue";
-import BaseGrid from "./components/UI/BaseCard/BaseGrid/BaseGrid.vue";
-import CityWeather from "./components/Weather/CityWeather/CityWeather.vue";
-import BaseCard from "./components/UI/BaseCard/BaseCard.vue";
+import BaseAlert from "./components/UI/Base/BaseAlert.vue";
+import SearchCity from "./components/Weather/SearchCity.vue";
+import BaseGrid from "./components/UI/Base/BaseGrid.vue";
+import CityWeather from "./components/Weather/CityWeather.vue";
+import BaseCard from "./components/UI/Base/BaseCard.vue";
 import { storage } from "./lib/storage";
 
 export default {

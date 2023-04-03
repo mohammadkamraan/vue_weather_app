@@ -75,9 +75,9 @@
 </template>
 
 <script>
-import { http } from "../../../lib/http";
-import { storage } from "../../../lib/storage";
-import BaseSpiner from "../../UI/BaseSpiner/BaseSpiner.vue";
+import { http } from "../../lib/http";
+import { storage } from "../../lib/storage";
+import BaseSpiner from "../UI/Base/BaseSpiner.vue";
 export default {
   components: { BaseSpiner },
   props: ["cityName", "isCompleteMode"],
