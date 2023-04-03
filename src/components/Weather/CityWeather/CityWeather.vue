@@ -75,10 +75,14 @@ export default {
   methods: {
     async getCityData() {
       this.loading = true;
-      const [loadingState, data] = await http.httpHandler();
-      console.log(loadingState, data);
+      const data = await http.httpHandler({
+        method: "GET",
+        url: this.cirtName,
+        data: null,
+      });
       this.cityData = data;
       this.loading = false;
+      console.log(data);
     },
     optionsTogglerHandler() {
       this.showOptions = !this.showOptions;

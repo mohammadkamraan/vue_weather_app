@@ -1,4 +1,5 @@
-const baseUrl = "https://api.openweathermap.org/data/2.5/weather";
+const baseUrl =
+  "https://api.openweathermap.org/data/2.5/weather?appid=598b114274eec032057ce55b8b32d864&q=";
 
 // the options:
 // this function just accept one parameter (an Object)
@@ -26,16 +27,18 @@ const baseUrl = "https://api.openweathermap.org/data/2.5/weather";
 
 export class http {
   static async httpHandler({ method, url, data }) {
-    let loading = true;
     const httpRequestHasData = Boolean(data);
     const requestBody = httpRequestHasData ? data : null;
-    const response = await fetch(baseUrl.concat(url), {
+    const fetchOptions = {
       method: method,
       "Content-Type": "application/json",
       body: JSON.stringify(requestBody),
-    });
-    const data = await response.json();
-    loading = false;
-    return [loading, data];
+    };
+    const response = await fetch(
+      baseUrl.concat(url),
+      method === "GET" ? null : fetchOptions
+    );
+    const responseData = await response.json();
+    return responseData;
   }
 }
