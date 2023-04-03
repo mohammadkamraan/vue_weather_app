@@ -1,23 +1,39 @@
 <template>
-  <base-alert :message="alertData.alertMessage"></base-alert>
+  <base-alert
+    v-if="alertData.showAlert"
+    :message="alertData.alertMessage"
+    :buttons="alertButtons"
+  ></base-alert>
   <search-city
-    @onAddTofavorite="addTofavoritesHandler"
+    @onShowAlert="showAlertHandler"
     @onSearch="searchHandler"
   ></search-city>
-  <city-weather
-    cirtName="tehran"
-    mode="test"
-    v-if="searchedValue"
-  ></city-weather>
+  <base-card :styles="[]">
+    <city-weather
+      :cityName="searchedValue"
+      :isCompleteMode="true"
+      v-if="searchedValue"
+    ></city-weather>
+  </base-card>
+  <base-grid v-if="citiesInStorage.length">
+    <base-card
+      v-for="city in citiesInStorage"
+      :key="city"
+      :styles="['card-item']"
+    >
+      <div class="card-item">
+        <city-weather :cityName="city" :isCompleteMode="false"></city-weather>
+      </div>
+    </base-card>
+  </base-grid>
 </template>
 
 <script>
 import BaseAlert from "./components/UI/BaseAlert/BaseAlert.vue";
 import SearchCity from "./components/Weather/SearchCity/SearchCity.vue";
-// import BaseGrid from "./components/UI/BaseCard/BaseGrid/BaseGrid.vue";
-// import BaseSpiner from "./components/UI/BaseSpiner/BaseSpiner.vue";
+import BaseGrid from "./components/UI/BaseCard/BaseGrid/BaseGrid.vue";
 import CityWeather from "./components/Weather/CityWeather/CityWeather.vue";
-
+import BaseCard from "./components/UI/BaseCard/BaseCard.vue";
 import { storage } from "./lib/storage";
 
 export default {
@@ -26,8 +42,8 @@ export default {
     CityWeather,
     BaseAlert,
     SearchCity,
-    // BaseGrid,
-    // BaseSpiner,
+    BaseGrid,
+    BaseCard,
   },
   data() {
     return {
@@ -45,23 +61,21 @@ export default {
           text: "OK",
           type: "info",
           handler: () => {
-            this.alertData.showAlert === false;
-            this.alertData.alertMessage === "";
+            this.alertData.showAlert = false;
+            this.alertData.alertMessage = "";
           },
         },
       ];
     },
+    citiesInStorage() {
+      return storage.storageHandler({
+        method: "getItem",
+        key: "cities",
+        data: null,
+      });
+    },
   },
   methods: {
-    // addTofavoritesHandler() {
-    //   const citiesInStorage =
-    //     storage.storageHandler({
-    //       method: "GET",
-    //       key: "cities",
-    //       data: null,
-    //     }) || [];
-    //     if(citiesInStorage.includes(sear))
-    // },
     showAlertHandler(message) {
       this.alertData.showAlert = Boolean(message.length);
       this.alertData.alertMessage = message;
@@ -74,12 +88,7 @@ export default {
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+.card-item {
+  grid-column: span 6 / span 6;
 }
 </style>

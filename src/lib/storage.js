@@ -5,6 +5,6 @@ export class storage {
       localStorage.setItem(key, dataInJsonFormat);
     }
     let storageValue = JSON.parse(localStorage.getItem(key));
-    return storageValue;
+    return storageValue || [];
   }
 }

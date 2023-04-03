@@ -1,44 +1,49 @@
-const baseUrl =
-  "https://api.openweathermap.org/data/2.5/weather?appid=598b114274eec032057ce55b8b32d864&q=";
+import { axoisDefault } from "../axois/axios";
 
-// the options:
-// this function just accept one parameter (an Object)
-// the object has this options =>
-// method : "POST" | "GET" | "PUT" | "PATCH" default : "GET"
-// url : string required
-// data : any
+// sending request using browser fetch
+// const baseUrl =
+//   "https://api.openweathermap.org/data/2.5/weather?appid=598b114274eec032057ce55b8b32d864&q=";
 
-// const dataGetterHandler = async ({ url }) => await fetch(baseUrl.concat(url));
+// export class http {
+//   static async httpHandler({ method, url, data }) {
+//     const httpRequestHasData = Boolean(data);
+//     const requestBody = httpRequestHasData ? data : null;
+//     const fetchOptions = {
+//       method: method,
+//       "Content-Type": "application/json",
+//       body: JSON.stringify(requestBody),
+//     };
+//     let responseData = null;
+//     let hasError = false;
+//     try {
+//       const response = await fetch(
+//         baseUrl.concat(url),
+//         method === "GET" ? null : fetchOptions
+//       );
+//       responseData = await response.json();
+//     } catch (error) {
+//       hasError = true;
+//       responseData = error;
+//     }
 
-// const dataSenderHandler = async ({ url, data }) =>
-//   await fetch(baseUrl.concat(url), {
-//     body: data,
-//     "Content-Type": "application/json",
-//   });
-
-// export const http = async ({ method, url, data }) => {
-//   let loading = null;
-// //   const httpHandler = Boolean(method === "GET")
-// //     ? dataGetterHandler
-// //     : dataSenderHandler;
-// const hasData = Boolean(data || data.length )
-// //   const response = httpHandler;
-// };
+//     return [responseData, error, hasError];
+//   }
+// }
 
 export class http {
   static async httpHandler({ method, url, data }) {
-    const httpRequestHasData = Boolean(data);
-    const requestBody = httpRequestHasData ? data : null;
-    const fetchOptions = {
-      method: method,
-      "Content-Type": "application/json",
-      body: JSON.stringify(requestBody),
-    };
-    const response = await fetch(
-      baseUrl.concat(url),
-      method === "GET" ? null : fetchOptions
-    );
-    const responseData = await response.json();
-    return responseData;
+    let responseData = null;
+    let hasError = false;
+    try {
+      responseData = await (
+        await axoisDefault({ params: { q: url }, data, method })
+      ).data;
+      console.log(responseData);
+    } catch (error) {
+      hasError = true;
+      responseData = error;
+    }
+
+    return [responseData, hasError];
   }
 }

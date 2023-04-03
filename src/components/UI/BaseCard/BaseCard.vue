@@ -1,8 +1,14 @@
 <template>
-  <div class="card">
+  <div :class="['card', ...styles]">
     <slot></slot>
   </div>
 </template>
+
+<script>
+export default {
+  props: ["styles"],
+};
+</script>
 
 <style scoped>
 .card {
