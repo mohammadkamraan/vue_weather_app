@@ -1,6 +1,6 @@
 <template>
   <base-spiner v-if="loading && !hasError"></base-spiner>
-  <div v-else-if="!loading && !hasError && cityData">
+  <div v-else-if="!loading && !hasError && weatherData">
     <header>
       <button v-if="!isCompleteMode" @click="optionsTogglerHandler">
         <svg
@@ -59,8 +59,8 @@
       <h5>{{ cityName }}</h5>
     </header>
     <div>
-      <p>{{ cityData.weather[0].main }}</p>
-      <p>{{ cityData.main.temp }}</p>
+      <p>{{ weatherData.weather[0].main }}</p>
+      <p>{{ weatherData.main.temp }}</p>
     </div>
     <div v-if="isCompeleteMode">
       <p>--coldest temp--</p>
