@@ -90,7 +90,7 @@ export default {
     async getCityData() {
       this.loading = true;
       await this.$store.dispatch("fetchWeatherData", this.cityName);
-      console.log(this.$store.state.weather);
+      console.log("the weather data ===>", this.weatherData, this.hasError);
       this.loading = false;
     },
     optionsTogglerHandler() {
@@ -117,10 +117,10 @@ export default {
   },
   computed: {
     weatherData() {
-      return this.$store.state.weather.weatherData;
+      return this.$store.getters.weatherData;
     },
     hasError() {
-      return this.$store.state.weather.hasError;
+      return this.$store.getters.isRequestFailed;
     },
   },
   created() {
