@@ -1,3 +1,6 @@
 export default {
-  setWeatherDataToStore(store, payload) {},
+  setWeatherDataToStore(state, { data, hasError }) {
+    state.weatherData = data;
+    state.hasError = hasError;
+  },
 };

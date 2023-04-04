@@ -75,7 +75,6 @@
 </template>
 
 <script>
-import { http } from "../../lib/http";
 import { storage } from "../../lib/storage";
 import BaseSpiner from "../UI/Base/BaseSpiner.vue";
 export default {
@@ -83,24 +82,16 @@ export default {
   props: ["cityName", "isCompleteMode"],
   data() {
     return {
-      cityData: null,
       loading: false,
       showOptions: false,
-      hasError: false,
     };
   },
   methods: {
     async getCityData() {
       this.loading = true;
-      const [data, hasError] = await http.httpHandler({
-        method: "GET",
-        url: this.cityName,
-        data: null,
-      });
-      this.cityData = data;
+      await this.$store.dispatch("fetchWeatherData", this.cityName);
+      console.log(this.$store.state.weather);
       this.loading = false;
-      this.hasError = hasError;
-      console.log(data);
     },
     optionsTogglerHandler() {
       this.showOptions = !this.showOptions;
@@ -122,6 +113,14 @@ export default {
         key: "cities",
         data: updatedCities,
       });
+    },
+  },
+  computed: {
+    weatherData() {
+      return this.$store.state.weather.weatherData;
+    },
+    hasError() {
+      return this.$store.state.weather.hasError;
     },
   },
   created() {
