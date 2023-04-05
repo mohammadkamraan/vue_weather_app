@@ -75,7 +75,6 @@
 </template>
 
 <script>
-import { storage } from "../../lib/storage";
 import BaseSpiner from "../UI/Base/BaseSpiner.vue";
 export default {
   components: { BaseSpiner },
@@ -100,19 +99,7 @@ export default {
       this.getCityData();
     },
     deleteHandler() {
-      const citiesInStorage = storage.storageHandler({
-        method: "getItem",
-        key: "cities",
-        data: null,
-      });
-      const updatedCities = citiesInStorage.filter(
-        city => city !== this.cityName
-      );
-      storage.storageHandler({
-        method: "setItem",
-        key: "cities",
-        data: updatedCities,
-      });
+      this.$store.dispatch("removeCityInStorage", this.cityName);
     },
   },
   computed: {

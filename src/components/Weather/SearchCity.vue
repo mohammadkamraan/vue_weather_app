@@ -37,9 +37,8 @@
 </template>
 
 <script>
-import { storage } from "../../lib/storage";
 export default {
-  emits: ["onSearch", "onShowAlert"],
+  emits: ["onSearch"],
   data() {
     return {
       searchedValue: "",
@@ -50,27 +49,7 @@ export default {
       this.$emit("onSearch", this.searchedValue);
     },
     addToFavoritesHandler() {
-      const citiesInStorage = storage.storageHandler({
-        method: "getItem",
-        key: "cities",
-        data: null,
-      });
-      if (
-        citiesInStorage.includes(this.searchedValue) ||
-        citiesInStorage.length >= 3
-      ) {
-        this.$emit(
-          "onShowAlert",
-          "You can just add three cities and the cities should be uniqe!"
-        );
-      } else {
-        citiesInStorage.unshift(this.searchedValue);
-        storage.storageHandler({
-          method: "setItem",
-          key: "cities",
-          data: citiesInStorage,
-        });
-      }
+      this.$store.dispatch("setCityInStorage", this.searchedValue);
     },
   },
 };

@@ -34,7 +34,6 @@ import SearchCity from "./components/Weather/SearchCity.vue";
 import BaseGrid from "./components/UI/Base/BaseGrid.vue";
 import CityWeather from "./components/Weather/CityWeather.vue";
 import BaseCard from "./components/UI/Base/BaseCard.vue";
-import { storage } from "./lib/storage";
 
 export default {
   name: "App",
@@ -48,10 +47,6 @@ export default {
   data() {
     return {
       searchedValue: "",
-      alertData: {
-        showAlert: "",
-        alertMessage: "",
-      },
     };
   },
   computed: {
@@ -61,18 +56,16 @@ export default {
           text: "OK",
           type: "info",
           handler: () => {
-            this.alertData.showAlert = false;
-            this.alertData.alertMessage = "";
+            this.$store.dispatch("closeCityLimitAlert");
           },
         },
       ];
     },
     citiesInStorage() {
-      return storage.storageHandler({
-        method: "getItem",
-        key: "cities",
-        data: null,
-      });
+      return this.$store.getters.citiesInStorage;
+    },
+    alertData() {
+      return this.$store.getters.limitAlertData;
     },
   },
   methods: {

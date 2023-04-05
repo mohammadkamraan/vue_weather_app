@@ -1,9 +1,12 @@
 import { createStore } from "vuex";
-import weatherStore from "./weather";
+
+import weatherStare from "./weather";
+import citiesState from "./cities";
 
 const store = createStore({
   modules: {
-    weather: weatherStore,
+    weather: weatherStare,
+    cities: citiesState,
   },
 });
 

@@ -7,7 +7,6 @@ export default {
       url: cityName,
       data: null,
     });
-    console.log(data);
     context.commit("setWeatherDataToStore", {
       data,
       hasError,
