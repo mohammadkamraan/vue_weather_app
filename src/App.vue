@@ -25,6 +25,7 @@
       </div>
     </base-card>
   </base-grid>
+  <notes-list></notes-list>
 </template>
 
 <script>
@@ -33,6 +34,7 @@ import SearchCity from "./components/Weather/SearchCity.vue";
 import BaseGrid from "./components/UI/Base/BaseGrid.vue";
 import CityWeather from "./components/Weather/CityWeather.vue";
 import BaseCard from "./components/UI/Base/BaseCard.vue";
+import NotesList from "./components/Notes/NotesList.vue";
 
 export default {
   name: "App",
@@ -42,6 +44,7 @@ export default {
     SearchCity,
     BaseGrid,
     BaseCard,
+    NotesList,
   },
   data() {
     return {

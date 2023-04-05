@@ -7,3 +7,12 @@ export const axoisDefault = axios.create({
     appid: "598b114274eec032057ce55b8b32d864",
   },
 });
+
+axoisDefault.interceptors.response.use(
+  response => {
+    console.log("the request successsed", response);
+  },
+  response => {
+    console.log("request failed", response);
+  }
+);
