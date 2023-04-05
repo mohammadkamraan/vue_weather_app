@@ -8,11 +8,10 @@
     @onShowAlert="showAlertHandler"
     @onSearch="searchHandler"
   ></search-city>
-  <base-card :styles="[]">
+  <base-card v-if="searchedValue" :styles="[]">
     <city-weather
       :cityName="searchedValue"
       :isCompleteMode="true"
-      v-if="searchedValue"
     ></city-weather>
   </base-card>
   <base-grid v-if="citiesInStorage.length">

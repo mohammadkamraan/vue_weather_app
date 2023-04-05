@@ -38,12 +38,10 @@ export class http {
       responseData = await (
         await axoisDefault({ params: { q: url }, data, method })
       ).data;
-      console.log(responseData);
     } catch (error) {
       hasError = true;
       responseData = error;
     }
-
     return [responseData, hasError];
   }
 }

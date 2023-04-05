@@ -89,7 +89,6 @@ export default {
     async getCityData() {
       this.loading = true;
       await this.$store.dispatch("fetchWeatherData", this.cityName);
-      console.log("the weather data ===>", this.weatherData, this.hasError);
       this.loading = false;
     },
     optionsTogglerHandler() {
@@ -108,6 +107,11 @@ export default {
     },
     hasError() {
       return this.$store.getters.isRequestFailed;
+    },
+  },
+  watch: {
+    cityName() {
+      this.getCityData();
     },
   },
   created() {
