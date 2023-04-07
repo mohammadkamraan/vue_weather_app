@@ -18,37 +18,43 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from "vue";
+
 import NotesData from "../../data/json/notes.json";
-export default {
-  components: {},
+
+import { Note } from "../../types/note";
+
+export default defineComponent({
   data() {
     return {
-      notes: NotesData,
-      selectedNoteId: null,
+      notes: NotesData as ReadonlyArray<Note>,
+      selectedNoteId: null as number | null,
     };
   },
   methods: {
-    selectedReadMoreNoteHandler(noteId) {
+    selectedReadMoreNoteHandler(noteId: null | number): void {
       if (noteId === this.selectedNoteId) {
         this.selectedNoteId = null;
       } else {
         this.selectedNoteId = noteId;
       }
     },
-    descriptionsHandler(desctiptions, noteId) {
-      console.log("calculate");
+    descriptionsHandler(
+      desctiptions: string[],
+      noteId: number | null
+    ): string[] {
       if (noteId === this.selectedNoteId) {
         return desctiptions;
       }
       return desctiptions.slice(0, 5);
     },
-    buttonLabelHandler(noteId) {
+    buttonLabelHandler(noteId: number | null): "read less" | "read more" {
       if (noteId === this.selectedNoteId) {
         return "read less";
       }
       return "read more";
     },
   },
-};
+});
 </script>

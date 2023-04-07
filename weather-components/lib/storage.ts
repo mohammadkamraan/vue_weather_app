@@ -4,7 +4,7 @@ export class storage {
       const dataInJsonFormat = JSON.stringify(data);
       localStorage.setItem(key, dataInJsonFormat);
     }
-    let storageValue = JSON.parse(localStorage.getItem(key));
+    const storageValue = JSON.parse(localStorage.getItem(key));
     return storageValue || [];
   }
 }

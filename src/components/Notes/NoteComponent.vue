@@ -11,33 +11,44 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { PropType, defineComponent } from "vue";
+
 import NoteDescription from "./NoteDescription.vue";
-export default {
+
+import { Note } from "../../types/note";
+
+export default defineComponent({
   components: {
     NoteDescription,
   },
-  props: ["note", "selectedNoteId"],
+  props: {
+    note: { required: true, type: Object as PropType<Note> },
+    selectedNoteId: {
+      required: true,
+      type: Number as PropType<number | null>,
+    },
+  },
   emits: ["onReadMore"],
   computed: {
-    desciptions() {
+    desciptions(): ReadonlyArray<string> {
       if (this.isReadMoreActive) {
         return this.note.description;
       } else {
         return this.note.description.slice(0, 5);
       }
     },
-    isReadMoreActive() {
+    isReadMoreActive(): boolean {
       return this.note.id === this.selectedNoteId;
     },
   },
   methods: {
-    onReadHandler() {
+    onReadHandler(): void {
       this.$emit(
         "onReadMore",
         this.isReadMoreActive ? null : this.selectedNoteId
       );
     },
   },
-};
+});
 </script>
