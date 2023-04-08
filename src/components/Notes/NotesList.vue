@@ -1,5 +1,5 @@
 <template>
-  <div v-for="note in notes" :key="note.id">
+  <!-- <div v-for="note in notes" :key="note.id">
     <p>
       {{ note.date }}
     </p>
@@ -15,6 +15,29 @@
     <button @click="selectedReadMoreNoteHandler(note.id)">
       {{ buttonLabelHandler(note.id) }}
     </button>
+  </div> -->
+  <div class="container">
+    <LazyList :data="notes" :itemsPerRender="6" defaultLoadingColor="no">
+      <template v-slot="{ item }">
+        <p>{{ item.date }}</p>
+        <ul>
+          <li
+            v-for="(description, index) in item.description"
+            :key="index"
+            v-show="selectedNoteId === item.id || index < 5"
+          >
+            {{ description }}
+          </li>
+        </ul>
+        <button
+          v-show="item.description.length > 5"
+          @click="selectedReadMoreNoteHandler(item.id)"
+        >
+          {{ buttonLabelHandler(item.id) }}
+        </button>
+        <hr />
+      </template>
+    </LazyList>
   </div>
 </template>
 
@@ -25,7 +48,12 @@ import NotesData from "../../data/json/notes.json";
 
 import { Note } from "../../types/note";
 
+import LazyList from "lazy-load-list/vue/LazyList.vue";
+
 export default defineComponent({
+  components: {
+    LazyList,
+  },
   data() {
     return {
       notes: NotesData as ReadonlyArray<Note>,
@@ -58,3 +86,10 @@ export default defineComponent({
   },
 });
 </script>
+
+<style scoped>
+.container {
+  width: 100%;
+  height: 90vh;
+}
+</style>
